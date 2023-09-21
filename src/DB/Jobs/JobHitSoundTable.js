@@ -146,7 +146,7 @@ define(["./JobConst"], function( JobId )
 	JobHitSoundTable[JobId.FROG_KAGEROU]      = ["player_wooden_male.wav"];
 	JobHitSoundTable[JobId.FROG_OBORO]        = ["player_wooden_male.wav"];
 	JobHitSoundTable[JobId.PECO_REBELLION]    = ["player_clothes.wav"];
-	
+
 	JobHitSoundTable[JobId.DO_SUMMONER1] 	  = ["player_clothes.wav"];
 
 	JobHitSoundTable[JobId.SHEEP_HPRIEST]     = ["player_clothes.wav"];
@@ -237,9 +237,9 @@ define(["./JobConst"], function( JobId )
 	duplicateEntry(JobId.SURA,             JobId.SURA_H,             JobId.SURA_B);
 	duplicateEntry(JobId.GENETIC,          JobId.GENETIC_H,          JobId.GENETIC_B);
 	duplicateEntry(JobId.SHADOW_CHASER,    JobId.SHADOW_CHASER_H,    JobId.SHADOW_CHASER_B);
-	
-	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER_B1);
-	
+
+	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER1_B);
+
 
 	//MOUNTS
 	duplicateEntry(JobId.PORING_NOVICE    ,JobId.PORING_NOVICE_H     ,JobId.PORING_NOVICE_B);

@@ -11,14 +11,14 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	"use strict";
 	var PalNameTable = {};
 	PalNameTable[JobId.NOVICE]           = JobNameTable[JobId.NOVICE];
-	
+
 	PalNameTable[JobId.SWORDMAN]         = JobNameTable[JobId.SWORDMAN];
 	PalNameTable[JobId.MAGICIAN]         = JobNameTable[JobId.MAGICIAN];
 	PalNameTable[JobId.ARCHER]           = JobNameTable[JobId.ARCHER];
 	PalNameTable[JobId.ACOLYTE]          = JobNameTable[JobId.ACOLYTE];
 	PalNameTable[JobId.MERCHANT]         = JobNameTable[JobId.MERCHANT];
 	PalNameTable[JobId.THIEF]            = JobNameTable[JobId.THIEF];
-	
+
 	PalNameTable[JobId.KNIGHT]           = JobNameTable[JobId.KNIGHT];
 	PalNameTable[JobId.PRIEST]           = JobNameTable[JobId.PRIEST];
 	PalNameTable[JobId.WIZARD]           = JobNameTable[JobId.WIZARD];
@@ -28,25 +28,25 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	PalNameTable[JobId.KNIGHT2]          = JobNameTable[JobId.KNIGHT2];
 	PalNameTable[JobId.CRUSADER]         = "\xc5\xa9\xb7\xe7";	// "crew"
 	PalNameTable[JobId.MONK]             = JobNameTable[JobId.MONK];
-	PalNameTable[JobId.SAGE]             = JobNameTable[JobId.SAGE]; 
+	PalNameTable[JobId.SAGE]             = JobNameTable[JobId.SAGE];
 	PalNameTable[JobId.ROGUE]            = JobNameTable[JobId.ROGUE];
 	PalNameTable[JobId.ALCHEMIST]        = JobNameTable[JobId.ALCHEMIST];
 	PalNameTable[JobId.BARD]             = JobNameTable[JobId.BARD];
 	PalNameTable[JobId.DANCER]           = "\xb4\xed\xbc\xad";	// "dancer" daenseo instead of muhui
 	PalNameTable[JobId.CRUSADER2]        = "\xc6\xe4\xc4\xda\xc6\xe4\xc4\xda\x5f\xc5\xa9\xb7\xe7";	// "pecopeco crew"
-	
+
 	PalNameTable[JobId.SUPERNOVICE]      = JobNameTable[JobId.SUPERNOVICE];
 	PalNameTable[JobId.GUNSLINGER]       = JobNameTable[JobId.GUNSLINGER];
 	PalNameTable[JobId.NINJA]            = JobNameTable[JobId.NINJA];
 	PalNameTable[JobId.TAEKWON]          = JobNameTable[JobId.TAEKWON];
 	PalNameTable[JobId.STAR]             = JobNameTable[JobId.STAR];
 	PalNameTable[JobId.STAR2]            = JobNameTable[JobId.STAR2];
-	
+
 	PalNameTable[JobId.LINKER]           = JobNameTable[JobId.LINKER];
 	PalNameTable[JobId.MARRIED]          = JobNameTable[JobId.MARRIED];
 	PalNameTable[JobId.XMAS]             = JobNameTable[JobId.XMAS];
 	PalNameTable[JobId.SUMMER]           = JobNameTable[JobId.SUMMER];
-	
+
 	PalNameTable[JobId.KNIGHT_H]         = JobNameTable[JobId.KNIGHT_H];
 	PalNameTable[JobId.PRIEST_H]         = "\xc7\xcf\xc0\xcc\xc7\xc1\xb8\xae\xbd\xba\xc6\xae";	// "high priest"
 	PalNameTable[JobId.WIZARD_H]         = JobNameTable[JobId.WIZARD_H];
@@ -62,7 +62,7 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	PalNameTable[JobId.BARD_H]           = "\xc5\xa9\xb6\xf3\xbf\xee";	// "crown"
 	PalNameTable[JobId.DANCER_H]         = JobNameTable[JobId.DANCER_H];
 	PalNameTable[JobId.CRUSADER2_H]      = "\xc6\xe4\xc4\xda\xc6\xc8\xb6\xf3";	// "pekopala"
-	
+
 	PalNameTable[JobId.RUNE_KNIGHT]      = JobNameTable[JobId.RUNE_KNIGHT];
 	PalNameTable[JobId.WARLOCK]          = JobNameTable[JobId.WARLOCK];
 	PalNameTable[JobId.RANGER]           = "\xb7\xb9\xc0\xce\xc0\xfa";	// "Ranger"... has a typo compared to path name.
@@ -80,24 +80,24 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	PalNameTable[JobId.ROYAL_GUARD2]     = JobNameTable[JobId.ROYAL_GUARD2];
 	PalNameTable[JobId.RANGER2]          = "\xbf\xef\xc7\xc1\xb7\xb9\xc0\xce\xc0\xfa";	// "wolfranger"
 	PalNameTable[JobId.MECHANIC2]        = "\xb9\xcc\xc4\xc9\xb4\xd0\x5f\xb8\xb6\xb5\xb5\xb1\xe2\xbe\xee";	// "mechanic_mado gear"
-	
+
 	PalNameTable[JobId.SUPERNOVICE2]	 = JobNameTable[JobId.SUPERNOVICE2];
 	PalNameTable[JobId.KAGEROU] 		 = "KAGEROU";	// Upper case
 	PalNameTable[JobId.OBORO] 			 = "OBORO";	// Upper case
 	PalNameTable[JobId.REBELLION] 		 = "\xb8\xae\xba\xa7\xb8\xae\xbf\xc2";	// "rebellion"
-	
+
 	PalNameTable[JobId.DO_SUMMONER1] 	 = "\xb9\xa6\xc1\xb7";	// "miao"
-	
+
 	//MOUNTS                              	//MOUNTS
 	PalNameTable[JobId.PORING_NOVICE]    = JobNameTable[JobId.PORING_NOVICE];
-	
+
 	PalNameTable[JobId.SHEEP_ACO]        = JobNameTable[JobId.SHEEP_ACO];
 	PalNameTable[JobId.OSTRICH_ARCHER]   = JobNameTable[JobId.OSTRICH_ARCHER];
 	PalNameTable[JobId.FOX_MAGICIAN]     = JobNameTable[JobId.FOX_MAGICIAN];
 	PalNameTable[JobId.PIG_MERCHANT]     = JobNameTable[JobId.PIG_MERCHANT];
 	PalNameTable[JobId.PECO_SWORD]       = JobNameTable[JobId.PECO_SWORD];
 	PalNameTable[JobId.DOG_THIEF]        = JobNameTable[JobId.DOG_THIEF];
-	
+
 	PalNameTable[JobId.SHEEP_PRIEST]     = JobNameTable[JobId.SHEEP_PRIEST];
 	PalNameTable[JobId.OSTRICH_HUNTER]   = JobNameTable[JobId.OSTRICH_HUNTER];
 	PalNameTable[JobId.FOX_WIZ]          = JobNameTable[JobId.FOX_WIZ];
@@ -111,7 +111,7 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	PalNameTable[JobId.PIG_ALCHE]        = JobNameTable[JobId.ALCHEMIST];	// Alchemist
 	PalNameTable[JobId.LION_CRUSADER]    = "\xc5\xa9\xb7\xe7";	// "crew"
 	PalNameTable[JobId.DOG_ROGUE]        = JobNameTable[JobId.ROGUE];	// Rogue
-	
+
 	PalNameTable[JobId.SHEEP_ARCB]       = JobNameTable[JobId.SHEEP_ARCB];
 	PalNameTable[JobId.OSTRICH_RANGER]   = JobNameTable[JobId.OSTRICH_RANGER];
 	PalNameTable[JobId.FOX_WARLOCK]      = JobNameTable[JobId.FOX_WARLOCK];
@@ -125,18 +125,18 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	PalNameTable[JobId.PIG_GENETIC]      = JobNameTable[JobId.PIG_GENETIC];
 	PalNameTable[JobId.LION_ROYAL_GUARD] = JobNameTable[JobId.LION_ROYAL_GUARD];
 	PalNameTable[JobId.DOG_CHASER]       = JobNameTable[JobId.DOG_CHASER];
-	
+
 	PalNameTable[JobId.PORING_SNOVICE]   = JobNameTable[JobId.PORING_SNOVICE];
 	PalNameTable[JobId.FROG_NINJA]       = JobNameTable[JobId.FROG_NINJA];
 	PalNameTable[JobId.PECO_GUNNER]      = JobNameTable[JobId.PECO_GUNNER];
 	PalNameTable[JobId.PORING_TAEKWON]   = JobNameTable[JobId.PORING_TAEKWON];
 	PalNameTable[JobId.PORING_STAR]      = JobNameTable[JobId.STAR];	// Star Gladiator
 	PalNameTable[JobId.FROG_LINKER]      = JobNameTable[JobId.FROG_LINKER];
-	
+
 	PalNameTable[JobId.FROG_KAGEROU]     = JobNameTable[JobId.FROG_KAGEROU];
 	PalNameTable[JobId.FROG_OBORO]       = JobNameTable[JobId.FROG_OBORO];
 	PalNameTable[JobId.PECO_REBELLION]   = JobNameTable[JobId.PECO_REBELLION];
-	
+
 	PalNameTable[JobId.SHEEP_HPRIEST]    = "\xc7\xcf\xc0\xcc\xc7\xc1\xb8\xae\xbd\xba\xc6\xae";	// "high priest"
 	PalNameTable[JobId.OSTRICH_SNIPER]   = JobNameTable[JobId.HUNTER_H];	// Sniper
 	PalNameTable[JobId.FOX_HWIZ]         = JobNameTable[JobId.WIZARD_H];	// High Wizard
@@ -150,7 +150,7 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	PalNameTable[JobId.PIG_CREATOR]      = JobNameTable[JobId.ALCHEMIST_H];	// Creator
 	PalNameTable[JobId.LION_CRUSADER_H]  = JobNameTable[JobId.CRUSADER_H];	// Paladin
 	PalNameTable[JobId.DOG_STALKER]      = JobNameTable[JobId.ROGUE_H];	// Stalker
-	
+
 	//PalNameTable[JobId.CART_DO_SUMMONER] 	 = "\xb0\xed\xbe\xe7\xc0\xcc\xc4\xab\xc6\xae";	// "cat cart"
 
 	// 4th
@@ -230,7 +230,7 @@ define(["./JobConst", "./JobNameTable"], function( JobId, JobNameTable )
 	duplicateEntry(JobId.SURA,             JobId.SURA_H,             JobId.SURA_B);
 	duplicateEntry(JobId.GENETIC,          JobId.GENETIC_H,          JobId.GENETIC_B);
 	duplicateEntry(JobId.SHADOW_CHASER,    JobId.SHADOW_CHASER_H,    JobId.SHADOW_CHASER_B);
-	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER_B1);
+	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER1_B);
 	//MOUNTS
 	duplicateEntry(JobId.PORING_NOVICE    ,JobId.PORING_NOVICE_H     ,JobId.PORING_NOVICE_B);
 	duplicateEntry(JobId.SHEEP_ACO        ,JobId.SHEEP_ACO_H         ,JobId.SHEEP_ACO_B);

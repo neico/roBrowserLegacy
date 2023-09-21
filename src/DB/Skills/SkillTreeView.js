@@ -7,8 +7,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 	SkillTreeView[JobId.NOVICE] = {
 		list: 1,
 		beforeJob: null,
-		[SK.NV_BASIC]: 0, 
-		[SK.NV_FIRSTAID]: 7, 
+		[SK.NV_BASIC]: 0,
+		[SK.NV_FIRSTAID]: 7,
 		[SK.NV_TRICKDEAD ]: 14
 	},
 	SkillTreeView[JobId.SWORDMAN] = {
@@ -1645,7 +1645,7 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 		[SK.SS_ANTENPOU]: 34,
 		[SK.SS_ANKOKURYUUAKUMU]: 41
 	}
-	
+
 	function duplicateEntry(origin) {
 		var value = SkillTreeView[origin];
 		var i, count = arguments.length;
@@ -1710,8 +1710,8 @@ define(["./SkillConst", "DB/Jobs/JobConst"], function (SK, JobId) {
 	duplicateEntry(JobId.SURA,             JobId.SURA_H,             JobId.SURA_B);
 	duplicateEntry(JobId.GENETIC,          JobId.GENETIC_H,          JobId.GENETIC_B);
 	duplicateEntry(JobId.SHADOW_CHASER,    JobId.SHADOW_CHASER_H,    JobId.SHADOW_CHASER_B);
-	
-	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER_B1);
+
+	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER1_B);
 
 	//MOUNTS
 	duplicateEntry(JobId.NOVICE           ,JobId.PORING_NOVICE    ,JobId.PORING_NOVICE_H     ,JobId.PORING_NOVICE_B);

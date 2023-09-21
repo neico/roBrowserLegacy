@@ -176,7 +176,7 @@ define(["./JobConst"], function( JobId )
 	JobNameTable[JobId.FROG_KAGEROU]      = "frog_kagerou";
 	JobNameTable[JobId.FROG_OBORO]        = "frog_oboro";
 	JobNameTable[JobId.PECO_REBELLION]    = "peco_rebellion";
-	
+
 	JobNameTable[JobId.DO_SUMMONER1] 	  = "summoner";
 
 	JobNameTable[JobId.SHEEP_HPRIEST]     = "\xc7\xcf\xc0\xcc\xc7\xc1\xb8\xae\xbd\xba\xc6\xae\xbe\xcb\xc6\xc4\xc4\xab";
@@ -248,9 +248,9 @@ define(["./JobConst"], function( JobId )
 	duplicateEntry(JobId.SURA,             JobId.SURA_H,             JobId.SURA_B);
 	duplicateEntry(JobId.GENETIC,          JobId.GENETIC_H,          JobId.GENETIC_B);
 	duplicateEntry(JobId.SHADOW_CHASER,    JobId.SHADOW_CHASER_H,    JobId.SHADOW_CHASER_B);
-	
-	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER_B1);
-	
+
+	duplicateEntry(JobId.DO_SUMMONER1,     JobId.DO_SUMMONER1_B);
+
 
 	//MOUNTS
 	duplicateEntry(JobId.PORING_NOVICE    ,JobId.PORING_NOVICE_H     ,JobId.PORING_NOVICE_B);

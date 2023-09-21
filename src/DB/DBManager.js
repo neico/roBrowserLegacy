@@ -22,7 +22,7 @@ define(function(require)
 	var PaletteTable     = require('./Jobs/PalNameTable');
 	var WeaponAction     = require('./Jobs/WeaponAction');
 	var WeaponJobTable   = require('./Jobs/WeaponJobTable');
-	var BabyTable        = require('./Jobs/BabyTable');
+	var JobConst         = require('./Jobs/JobConst');
 	var HairIndexTable   = require('./Jobs/HairIndexTable');
 	var MonsterTable     = require('./Monsters/MonsterTable');
 	var PetIllustration  = require('./Pets/PetIllustration');
@@ -342,7 +342,7 @@ define(function(require)
 		if (job === 4218 || job === 4220) {
 			return 'data/sprite/\xb5\xb5\xb6\xf7\xc1\xb7/\xb8\xd3\xb8\xae\xc5\xeb/' + SexTable[sex] + '/' + (HairIndexTable[sex + 2][id] || id) + '_' + SexTable[sex];
 		}
-		
+
 		return 'data/sprite/\xc0\xce\xb0\xa3\xc1\xb7/\xb8\xd3\xb8\xae\xc5\xeb/' + SexTable[sex] + '/' + (HairIndexTable[sex][id] || id)+ '_' + SexTable[sex];
 	};
 
@@ -449,15 +449,15 @@ define(function(require)
 		if ((id in ItemTable) && ('ClassNum' in ItemTable[id])) {
 			id = ItemTable[id].ClassNum;
 		}
-		
+
 		if (leftid){
 			if ((leftid in ItemTable) && ('ClassNum' in ItemTable[leftid])) {
 				leftid = ItemTable[leftid].ClassNum;
 			}
-			
+
 			// Create dualhand Id
 			var right = Object.keys(WeaponType).find(key => WeaponType[key] === id);
-			var left  = Object.keys(WeaponType).find(key => WeaponType[key] === leftid); 
+			var left  = Object.keys(WeaponType).find(key => WeaponType[key] === leftid);
 			if(right && left){
 				id = WeaponType[right+'_'+left];
 			}
@@ -766,16 +766,16 @@ define(function(require)
 
 					for (i = 1; i <= 4; ++i) {
 						var card = item.slot['card'+i];
-						
+
 						if (!card) {
 							break;
 						}
-						
+
 						//store order
 						if(!(cardList.includes(card))){
 							cardList.push(card);
 						}
-						
+
 						//store details
 						if(cards[card]){
 							cards[card].count++;
@@ -786,7 +786,7 @@ define(function(require)
 							cards[card].count = 0;
 						}
 					}
-					
+
 					//create prefixes and postfixes in order
 					cardList.forEach( card => {
 						if(cards[card].isPostfix){
@@ -809,9 +809,9 @@ define(function(require)
 		if(showprefix){
 			str += prefix;
 		}
-		
+
 		str += it.identifiedDisplayName;
-		
+
 		if(showpostfix){
 			str += postfix;
 		}
@@ -880,14 +880,25 @@ define(function(require)
 	};
 
 	/**
-	 * Is character id a baby ?
+	 * Is job id a baby ?
 	 *
 	 * @param {number} job id
 	 * @return {boolean} is baby
 	 */
-	DB.isBaby = function isBaby( jobid )
+	DB.isBaby = function isBaby( JobId )
 	{
-		return BabyTable.indexOf(jobid) > -1;
+		return Object.keys( JobConst ).find( Job => JobConst[Job] === JobId )?.endsWith( '_B' );
+	};
+
+	/**
+	 * Is job id transcendent ?
+	 *
+	 * @param {number} job id
+	 * @return {boolean} is transcendent
+	 */
+	DB.isTranscendent = function isTranscendent( JobId )
+	{
+		return Object.keys( JobConst ).find( Job => JobConst[Job] === JobId )?.endsWith( '_H' );
 	};
 
 	DB.getRandomJoke = function getRandomJoke(){
@@ -914,12 +925,12 @@ define(function(require)
 	 * Get Pet talk message
 	 *
 	 * @param {integer} message data combined with mob id, hungryState, actionState
-	 * @return {string} pet telk sentence 
-	 * 
+	 * @return {string} pet telk sentence
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetTalk = function getPetTalk (data){
-		
+
 		// Structure:
 		// Examaple: 1013010
 		// 1013  |      01     |     0
@@ -939,7 +950,7 @@ define(function(require)
 		if(hungryState !== null && hungryState !== undefined){
 			hungryText = DB.getPetHungryText(parseInt(hungryState));
 		}
-		
+
 		if(actionState !== null && actionState !== undefined){
 			actionText = DB.getPetActText(parseInt(actionState));
 		}
@@ -956,7 +967,7 @@ define(function(require)
 			}
 			return TextEncoding.decodeString(PetTalkTable[mobName][hungryText][actionText]);
 		}
-		
+
 		return false;
 	}
 
@@ -965,18 +976,18 @@ define(function(require)
 	 *
 	 * @param {integer} hunger
 	 * @return {integer} hunger state
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetHungryState = function getPetHungryState (hunger)
-	{	
+	{
 		if(!hunger){
 			return 0;
 		}
 		if (hunger > 90 && hunger <= 100)
 			return PetHungryState.PET_FULL;
 		else if (hunger > 75 && hunger <= 90)
-			return PetHungryState.PET_ENOUGH;		
+			return PetHungryState.PET_ENOUGH;
 		else if (hunger > 25 && hunger <= 75)
 			return PetHungryState.PET_SATISFIED;
 		else if (hunger > 10 && hunger <= 25)
@@ -991,7 +1002,7 @@ define(function(require)
 	 *
 	 * @param {integer} friendly
 	 * @return {integer} friendly state
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetFriendlyState = function getPetFriendlyState(friendly)
@@ -1002,7 +1013,7 @@ define(function(require)
 		if (friendly > 900 && friendly <= 1000)
 			return PetFriendlyState.PET_FAMILIAR;
 		else if (friendly > 750 && friendly <= 900)
-			return PetFriendlyState.PET_FRIENDLY;		
+			return PetFriendlyState.PET_FRIENDLY;
 		else if (friendly > 250 && friendly <= 750)
 			return PetFriendlyState.PET_NORMAL;
 		else if (friendly > 100 && friendly <= 250)
@@ -1017,7 +1028,7 @@ define(function(require)
 	 *
 	 * @param {integer} action
 	 * @return {string} action string
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetActText = function getPetActText(action)
@@ -1046,7 +1057,7 @@ define(function(require)
 			case	PetMessageConst.PM_PERFORMANCE_S:
 				return "perfor_s";
 		}
-	
+
 		return "stand";
 	}
 
@@ -1055,7 +1066,7 @@ define(function(require)
 	 *
 	 * @param {integer} hungry state
 	 * @return {String} hungry state text
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetHungryText = function getPetHungryText(state)
@@ -1073,7 +1084,7 @@ define(function(require)
 						return "so_full";
 		}
 		return "hungry";
-		
+
 	}
 
 	/**
@@ -1083,7 +1094,7 @@ define(function(require)
 	 * @param {integer} friendly state
 	 * @param {integer} action
 	 * @return {integer} emotion id
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetEmotion = function getPetEmotion(hunger, friendly, act)
@@ -1101,7 +1112,7 @@ define(function(require)
 	 * @param {integer} action
 	 * @param {integer} hungry state
 	 * @return {integer} message data
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.getPetTalkNumber = function getPetTalkNumber(job, act, hungry)
@@ -1123,7 +1134,7 @@ define(function(require)
 	 *
 	 * @param {string} map name
 	 * @return {boolean} is indoor?
-	 * 
+	 *
 	 * @author MrUnzO
 	 */
 	DB.isIndoor = function isIndoor(mapname) {

@@ -254,7 +254,7 @@ define(function()
 		//?                 4217,
 		DO_SUMMONER1:       4218,
 		//?                 4219,
-		DO_SUMMONER_B1:     4220,
+		DO_SUMMONER1_B:     4220,
 		NINJA_B:            4222,
 		KAGEROU_B:          4223,
 		OBORO_B:            4224,
