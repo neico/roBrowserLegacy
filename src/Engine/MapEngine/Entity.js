@@ -1993,10 +1993,12 @@ define(function( require )
 									|| !!entity.Camouflage
 									|| !!entity.Stealthfield );
 
-			if ( MapPreferences.aura && !invisibleState ) {
+			if ( MapPreferences.aura > 0 && !invisibleState ) {
 				if( !entity.auraVisible ){ // must be inside check
-					EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99 } );
-					EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99_2 } );
+					if( MapPreferences.aura == 1 ) {
+						EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99 } );
+						EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99_2 } );
+					}
 					EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99_3 } );
 					entity.auraVisible = true;
 				}

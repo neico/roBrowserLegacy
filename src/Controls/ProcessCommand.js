@@ -80,8 +80,14 @@ define(function( require )
 				return;
 
 			case 'aura':
-				this.addText( DB.getMessage(711 + MapPreferences.aura), this.TYPE.INFO );
-				MapPreferences.aura = !MapPreferences.aura;
+				MapPreferences.aura = ( MapPreferences.aura == 2 ? 1 : 2 );
+				MapPreferences.save();
+				this.addText( DB.getMessage(710 + MapPreferences.aura), this.TYPE.INFO );
+				return;
+
+			case 'aura2':
+				this.addText( DB.getMessage( 2994 + MapPreferences.aura, ( MapPreferences.aura == 1 ? 'Aura effect is OFF' : 'Aura effect is ON' ) ), this.TYPE.INFO );
+				MapPreferences.aura = ( MapPreferences.aura == 0 ? 1 : 0 );
 				MapPreferences.save();
 				return;
 
