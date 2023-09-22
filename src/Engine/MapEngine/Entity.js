@@ -212,6 +212,8 @@ define(function( require )
 					EffectManager.remove( null, pkt.GID, null);
 			}
 
+			processAura( entity, true );
+
 			entity.remove( pkt.type );
 		}
 
@@ -879,6 +881,8 @@ define(function( require )
 				else {
 					entity.weapon = pkt.value;
 				}
+
+				processAura( entity );
 				break;
 
 			case 3: entity.accessory   = pkt.value; break;
@@ -891,8 +895,6 @@ define(function( require )
 			case 10: break; // UNKNOWN²
 			case 11: break; // robe, not supported yet
 		}
-
-		processAura( entity );
 	}
 
 	/**
@@ -1984,29 +1986,64 @@ define(function( require )
 		}
 	}
 
-	function processAura( entity ){
-		//TODO: fix this thing and add rebirth & 3rd class aura
-		if( Session.Playing && entity.clevel >= 99 ){
+	function processAura( entity, remove = false ) {
+		if( Session.Playing ) {
+			// Note: put the simplified aura effect first, so it can be queried
 
-			var invisibleState = (	(entity._effectState & (StatusState.EffectState.INVISIBLE|StatusState.EffectState.HIDE|StatusState.EffectState.CLOAK|StatusState.EffectState.CHASEWALK))
-									|| !!entity.Shadowform
-									|| !!entity.Camouflage
-									|| !!entity.Stealthfield );
-
-			if ( MapPreferences.aura > 0 && !invisibleState ) {
-				if( !entity.auraVisible ){ // must be inside check
-					if( MapPreferences.aura == 1 ) {
-						EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99 } );
-						EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99_2 } );
-					}
-					EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: EffectConst.EF_LEVEL99_3 } );
-					entity.auraVisible = true;
+			// TODO: 3rd & 4th Job Aura, levels 150/160/175?
+			/*if( entity.clevel >= 150 )
+			else*/ if( entity.clevel >= 99 )
+			{
+				/*if( DB.isTranscendent( entity.job ) ) {
+					entity.auraEffects = { EffectConst.EF_LEVEL99_6, EffectConst.EF_LEVEL99_5, EffectConst.EF_LEVEL99_4 };
 				}
-			} else if ( entity.auraVisible ) {
-				EffectManager.remove( null, entity.GID, EffectConst.EF_LEVEL99 );
-				EffectManager.remove( null, entity.GID, EffectConst.EF_LEVEL99_2 );
-				EffectManager.remove( null, entity.GID, EffectConst.EF_LEVEL99_3 );
-				entity.auraVisible = false;
+				else {
+*/					entity.auraEffects = [ EffectConst.EF_LEVEL99_3, EffectConst.EF_LEVEL99_2, EffectConst.EF_LEVEL99 ];
+//				}
+			}
+			else if( entity.clevel == 1 && entity?.auraEffects.length && EffectManager.has( null, entity.GID, entity?.auraEffects[0] ) ) {
+				// Note: fall trough so the effects are cleared upon rebirthing
+			}
+			else {
+				return;
+			}
+
+			// Note: removing the effects and respawning them for each event could be a bit expensive,
+			// but there doesn't seem to be a better way to handle all cases right now
+			EffectManager.remove( null, entity.GID, [
+				// Note: Level 99 Aura
+				EffectConst.EF_LEVEL99_3, EffectConst.EF_LEVEL99_2, EffectConst.EF_LEVEL99,
+				// Note: Level 99 Trancendent Aura
+				EffectConst.EF_LEVEL99_6, EffectConst.EF_LEVEL99_5, EffectConst.EF_LEVEL99_4,
+				// Note: Level 99-150??
+				//EffectConst.EF_LEVEL99_150
+				// Note: Level 99 Orbs?
+				//EffectConst.EF_LEVEL99_ORB1, EffectConst.EF_LEVEL99_ORB2,
+				// Note: Level 150 Aura?
+				//EffectConst.EF_LEVEL150, EffectConst.EF_LEVEL150_SUB,
+				// Note: Level 160 Aura?
+				//EffectConst.EF_LEVEL160, EffectConst.EF_LEVEL160_SUB
+			] );
+
+			if( remove ) return;
+
+			var invisibleState = (
+				( entity._effectState & (
+					StatusState.EffectState.INVISIBLE |
+					StatusState.EffectState.HIDE |
+					StatusState.EffectState.CLOAK |
+					StatusState.EffectState.CHASEWALK
+				) ) ||
+				!!entity.Shadowform ||
+				!!entity.Camouflage ||
+				!!entity.Stealthfield
+			);
+
+			if( MapPreferences.aura > 0 && !invisibleState && entity.auraEffects.length && !EffectManager.has( null, entity.GID, entity.auraEffects[0] ) ) {
+				if( entity.auraEffects[0] ) EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: entity.auraEffects[0] } );
+				if( MapPreferences.aura == 1 ) {
+					for( let i = 1; i <= entity.auraEffects.length; ++i ) EffectManager.spam( { ownerAID: entity.GID, position: entity.position, effectId: entity.auraEffects[i] } );
+				}
 			}
 		}
 	}
