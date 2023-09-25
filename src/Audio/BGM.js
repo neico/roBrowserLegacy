@@ -195,7 +195,9 @@ function( require,         jQuery,        Client,   Preferences )
 		if (BGM.useHTML5) {
 			BGM.audio.src    = url;
 			BGM.audio.volume = this.volume;
-			BGM.audio.play();
+			BGM.audio.play().catch( ( error ) => {
+				console.error( 'Failed to play \"BGM/' + this.filename + '\": ' + error.message );
+			} );
 		}
 
 		// Flash fallback

@@ -15,7 +15,7 @@ define( ['Core/Client', 'Preferences/Audio', 'Core/MemoryManager', 'Utils/gl-mat
 function(      Client,          Preferences,              Memory,          glMatrix,                 Session)
 {
 	'use strict';
-	
+
 	const C_MAX_SOUND_INSTANCES = 10; //starting max, later balanced based on mediaPlayerCount
 	const C_MAX_CACHED_SOUND_INSTANCES = 30; //starting max, later balanced based on mediaPlayerCount
 	const C_MAX_MEDIA_PLAYERS = 800; //Browsers are limited to 1000 media players max (in Chrome). Let's not go all the way.
@@ -32,7 +32,7 @@ function(      Client,          Preferences,              Memory,          glMat
 	 * Re-usable sounds
 	 */
 	var _cache = {};
-	
+
 	/**
 	 * @Number of existing HTML Media players in the DOM
 	 */
@@ -42,7 +42,7 @@ function(      Client,          Preferences,              Memory,          glMat
 	 * @Constructor
 	 */
 	var SoundManager = {};
-	
+
 
 	/**
 	 * @var {float} sound volume
@@ -59,7 +59,7 @@ function(      Client,          Preferences,              Memory,          glMat
 	 */
 	SoundManager.play = function play( filename, vol ) {
 		var volume;
-		
+
 		// Sound volume * Global volume
 		if (vol) {
 			volume = vol * this.volume;
@@ -72,7 +72,7 @@ function(      Client,          Preferences,              Memory,          glMat
 		if (volume <= 0 || !Preferences.Sound.play) {
 			return;
 		}
-		
+
 		if(!(filename in _sounds)){
 			_sounds[filename] = {};
 			_sounds[filename].instances = [];
@@ -84,12 +84,16 @@ function(      Client,          Preferences,              Memory,          glMat
 		if (sound) {
 			sound.volume  = Math.min(volume,1.0);
 			sound._volume = volume;
-			sound.play();
-			_sounds[filename].instances.push(sound);
-			_sounds[filename].lastTick = Date.now();
+			sound.play().then( () => {
+				// Add it to the list
+				_sounds[filename].instances.push(sound);
+				_sounds[filename].lastTick = Date.now();
+			} ).catch( ( error ) => {
+				console.error( 'Failed to play \"data/wav/' + filename + '\": ' + error.message );
+			} );
 			return;
 		}
-		
+
 		// Get the sound from client.
 		Client.loadFile( 'data/wav/' + filename, function( url ) {
 			var sound;
@@ -108,14 +112,16 @@ function(      Client,          Preferences,              Memory,          glMat
 			sound.src         = url;
 			sound.volume      = Math.min(volume,1.0);
 			sound._volume     = volume;
-			
+
 			sound.addEventListener('error', onSoundError, false);
 			sound.addEventListener('ended', onSoundEnded, false);
-			sound.play();
-
-			// Add it to the list
-			_sounds[filename].instances.push(sound);
-			_sounds[filename].lastTick = Date.now();
+			sound.play().then( () => {
+				// Add it to the list
+				_sounds[filename].instances.push(sound);
+				_sounds[filename].lastTick = Date.now();
+			} ).catch( ( error ) => {
+				console.error( 'Failed to play \"data/wav/' + filename + '\": ' + error.message );
+			} );
 		});
 	};
 
@@ -185,7 +191,7 @@ function(      Client,          Preferences,              Memory,          glMat
 
 		Preferences.Sound.volume = this.volume;
 		Preferences.save();
-		
+
 		Object.keys(_sounds).forEach(key => {
 			_sounds[key].instances.forEach(sound => {
 				sound.volume = Math.min( sound._volume * this.volume, 1.0);
@@ -210,11 +216,11 @@ function(      Client,          Preferences,              Memory,          glMat
 					delete _sounds[this.filename]; //This can cause some errors, but whatever. Everything for performance!
 				}
 			}
-			
+
 			addSoundToCache(this);
 		}
 	}
-	
+
 	/**
 	 * Clear sound from dom on error
 	 */
@@ -232,7 +238,7 @@ function(      Client,          Preferences,              Memory,          glMat
 		this.remove();
 		mediaPlayerCount--;
 	}
-	
+
 	/**
 	 * Add sound to cache and set associated vars
 	 *
@@ -244,19 +250,19 @@ function(      Client,          Preferences,              Memory,          glMat
 				_cache[sound.filename] = new Object();
 				_cache[sound.filename].instances = new Array();
 			}
-			
+
 			//Don't cache too many instances (self balancing formula based on total media players)
 			if(_cache[sound.filename].instances.length < balancedMax(C_MAX_CACHED_SOUND_INSTANCES)){
-				
+
 				sound.currentTime = 0; //reset to start to save seeking time on next play THIS IS IMPORTANT! It improves the performance by 10 fold for whatever reason...
-				
+
 				sound.cleanupHandle = setTimeout(function(){ cleanupCache(sound); }, C_CACHE_CLEANUP_TIME);
 				_cache[sound.filename].instances.push(sound); //put to the end
 			} else {
 				sound.remove(); //remove from dom if too many instances are already stored
 				mediaPlayerCount--;
 			}
-			
+
 		}
 	}
 
@@ -282,7 +288,7 @@ function(      Client,          Preferences,              Memory,          glMat
 
 		return out;
 	}
-	
+
 	/**
 	 * Remove sound from cache if it was sitting there for too long
 	 *
@@ -290,7 +296,7 @@ function(      Client,          Preferences,              Memory,          glMat
 	 */
 	function cleanupCache(sound){
 		if(sound.filename && sound.filename in _cache && _cache[sound.filename].instances.length > 0){
-			
+
 			var pos = _cache[sound.filename].instances.indexOf(sound);
 
 			if (pos !== -1) {
@@ -304,7 +310,7 @@ function(      Client,          Preferences,              Memory,          glMat
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns a balanced value for max audio instance number based on the currently existing HTML Media players in the DOM
 	 *
