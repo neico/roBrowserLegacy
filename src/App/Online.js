@@ -37,10 +37,8 @@ require( {
 		Plugins.init();
 		GameEngine.init();
 
-		if (!Context.Is.APP) {
-			window.onbeforeunload = function() {
-				return 'Are you sure to exit roBrowser ?';
-			};
-		}
+		window.onbeforeunload = function() {
+			return 'Are you sure to exit roBrowser ?';
+		};
 	}
 );

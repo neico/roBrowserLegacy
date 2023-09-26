@@ -199,7 +199,7 @@ define(function( require )
 
 			Mouse.screen.x  = _touches[0].pageX;
 			Mouse.screen.y  = _touches[0].pageY;
-			
+
 			if(!Session.FreezeUI){
 				Mouse.intersect = true;
 				_intersect      = true;
@@ -277,12 +277,8 @@ define(function( require )
 
 	// Add full screen on mobile (sux to have the browser title bar)
 	if (Math.max(screen.availHeight,screen.availWidth) <= 800) {
-		// Mobile app (in future ?)
-		if (Context.Is.APP) {
-			Context.requestFullScreen();
-		}
 		// Fullscreen on action
-		else {
+		{
 			jQuery(window).on('touchstart', function(){
 				if (!Context.isFullScreen()) {
 					Context.requestFullScreen();
@@ -290,13 +286,13 @@ define(function( require )
 			});
 		}
 	}
-	
+
 	//Add mobile UI on touch
 	jQuery(window).one('touchstart', touchDevice);
-	
+
 	function touchDevice(){
 		Session.isTouchDevice = true;
-		
+
 		if(Session.Playing){ //Already playing, don't wait for map change, just show it
 			var MobileUI = require('UI/Components/MobileUI/MobileUI');
 			MobileUI.show();

@@ -65,12 +65,7 @@ define(function( require )
 		q.add(function(){
 			Client.onFilesLoaded = function(count){
 				if (!Configs.get('remoteClient') && !count && !window.requireNode) {
-					if (!Context.Is.APP) {
-						alert( 'No client to initialize roBrowser');
-					}
-					else {
-						// FIXME: no window.alert() in chrome app.
-					}
+					alert( 'No client to initialize roBrowser');
 					Intro.remove();
 					Intro.append();
 					return;

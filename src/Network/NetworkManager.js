@@ -23,10 +23,7 @@ define(function( require )
 	var PacketRegister = require('./PacketRegister');
 	var PacketCrypt    = require('./PacketCrypt');
 	var PacketLength   = require('./PacketLength');
-	var ChromeSocket   = require('./SocketHelpers/ChromeSocket');
-	var JavaSocket     = require('./SocketHelpers/JavaSocket');
 	var WebSocket      = require('./SocketHelpers/WebSocket');
-	var TCPSocket      = require('./SocketHelpers/TCPSocket');
 	var NodeSocket     = require('./SocketHelpers/NodeSocket');
 	var getModule      = require;
 
@@ -95,29 +92,14 @@ define(function( require )
 		var socket, Socket;
 		var proxy = Configs.get('socketProxy', null);
 
-		// Chrome App
-		if (Context.Is.APP) {
-			Socket = ChromeSocket;
-		}
-
-		// Firefox OS App
-		else if (TCPSocket.isSupported()) {
-			Socket = TCPSocket;
-		}
-
 		// node-webkit
-		else if (NodeSocket.isSupported()) {
+		if (NodeSocket.isSupported()) {
 			Socket = NodeSocket;
 		}
 
 		// Web Socket with proxy
 		else if (proxy) {
 			Socket = WebSocket;
-		}
-
-		// Java socket...
-		else {
-			Socket = JavaSocket;
 		}
 
 		socket            = new Socket(host, port, proxy);
@@ -164,7 +146,7 @@ define(function( require )
 		if(packetDump) {
 			let fp = new BinaryReader( pkt.buffer );
 			let id = fp.readUShort()
-			console.log("%c[Network] Dump Send: \n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s", 
+			console.log("%c[Network] Dump Send: \n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s",
 				'color:#007070', 'color:#FFFFFF',
 				id.toString(16), Packet.constructor.name, pkt.buffer.byteLength, utilsBufferToHexString(pkt.buffer).toUpperCase());
 		}
@@ -323,11 +305,11 @@ define(function( require )
 
 			if(Packets.list[id]) {
 				packet  = Packets.list[id];
-				
+
 				if(packetDump) {
 					let buffer_console = new Uint8Array( buffer, 0, length );
-					console.log("%c[Network] Dump Recv:\n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s", 
-						'color:#900090', 'color:#FFFFFF', 
+					console.log("%c[Network] Dump Recv:\n%cPacket ID: 0x%s\nPacket Name: %s\nLength: %d\nContent:\n%s",
+						'color:#900090', 'color:#FFFFFF',
 						id.toString(16), packet.name, length, utilsBufferToHexString(buffer_console).toUpperCase());
 				}
 

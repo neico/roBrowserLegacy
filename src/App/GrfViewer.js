@@ -34,9 +34,7 @@ require({
 
 	GRFViewer.append();
 
-	if (!Context.Is.APP) {
-		window.onbeforeunload = function() {
-			return 'Are you sure to exit ?';
-		};
-	}
+	window.onbeforeunload = function() {
+		return 'Are you sure to exit ?';
+	};
 });
