@@ -12,6 +12,7 @@
 	left:50%;
 	margin-top:-300px;
 	margin-left:-400px;
+	background-image:url('./images/background.jpg');
 	background-repeat:no-repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -27,6 +28,7 @@
 	position:absolute;
 	top:0px;
 	right:0px;
+	background-image:url('./images/ribbon.png');
 	background-repeat:no-repeat;
 }
 
@@ -110,7 +112,7 @@
 	left:285px;
 	width:228px;
 	height:90px;
-	background-image:url(images/play.png);
+	background-image:url('./images/play.png');
 	background-color:transparent;
 	background-repeat:no-repeat;
 	border:none;
@@ -119,12 +121,17 @@
 	top:501px;
 }
 
+#intro .btn_play:hover
+{
+	background-image:url('./images/play-down.png');
+}
 
 /** BOX **/
 
 #intro .box {
 	width:158px;
 	height:157px;
+	background-image:url('./images/box.jpg');
 	background-repeat:no-repeat;
 	position:absolute;
 	top:332px;
@@ -292,6 +299,7 @@ input[type='radio']:checked::before {
 #intro .btn_delete {
 	width:10px;
 	height:10px;
+	background-image:url('./images/delete.png');
 	background-repeat:no-repeat;
 	background-color:transparent;
 	border:none;
@@ -341,6 +349,7 @@ input[type='radio']:checked::before {
 	width:45px;
 	height:27px;
 	border:none;
+	background-image:url('./images/add-server.jpg');
 	background-repeat:no-repeat;
 	background-color:transparent;
 }
@@ -349,6 +358,7 @@ input[type='radio']:checked::before {
 	width:158px;
 	height:35px;
 	border:none;
+	background-image:url('./images/save.jpg');
 	background-repeat:no-repeat;
 	background-color:transparent;
 	position: absolute;

@@ -54,7 +54,7 @@ define(function( require )
 		this.ctx.globalCompositeOperation = 'lighter';
 
 		this.bg     = new Image();
-		this.bg.src = require.toUrl('./images/background.jpg');
+		this.bg.src = './images/background.jpg';
 		this.bg.onload = function(){ this.ready = true; };
 
 		for (var i = 0; i < count; ++i) {

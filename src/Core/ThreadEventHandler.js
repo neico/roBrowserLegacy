@@ -8,11 +8,6 @@
  * @author Vincent Thibault
  */
 
-importScripts('../Vendors/require.js');
-requirejs.config({
-	baseUrl: '../'
-});
-
 require(['Core/FileManager', 'Core/FileSystem', 'Loaders/MapLoader'],
 function(      FileManager,        FileSystem,           MapLoader )
 {

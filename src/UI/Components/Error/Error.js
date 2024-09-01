@@ -42,7 +42,7 @@ define(function( require )
 		style.append('\n' + _cssText);
 		jQuery('body').html(this.ui);
 
-		this.ui.css('backgroundImage', 'url('+ require.toUrl('./angeling.png') +')');
+		this.ui.css('backgroundImage', 'url(\'./angeling.png\')');
 	};
 
 
@@ -53,7 +53,7 @@ define(function( require )
 	 */
 	Error.addTrace = function addTrace( error )
 	{
-		var url = requirejs.toUrl(''); // global
+		var url = import.meta.url; // global
 		error   = error.stack || error;
 
 		url   = url.replace(/\/([^\/]+)$/g,'/');

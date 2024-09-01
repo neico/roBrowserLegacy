@@ -10,16 +10,16 @@
  * To add plugins use the "plugins" param to list plugins in the ROBrowser Config. Plugins must be located in the /Plugin/ folder.
  *
  * Usage:
- * 		plugins: {
- *					<plugin_1_name>: '<plugin_1_path>',
- *					<plugin_2_name>: '<plugin_2_path>',
- *					<plugin_3_name>: '<plugin_3_path>',
- *					...
- *					<plugin_n_name>: '<plugin_n_path>'
- *				},
+ * 		plugins:
+ * 		[
+ * 			'<path/to/plugin1>',
+ * 			{ name: 'plugin2', path: '<path/to/plugin2>' },
+ * 			{ name: 'plugin3', path: '<path/to/plugin3>', params: [ 'param1', 'param2' ] },
+			...
+ *		]
  *
  * Example:
- * 		plugins:		{ KeyboardControl: 'KeyToMove_v1/KeyToMove' },
+ * 		plugins:		[ 'KeyToMove_v1/KeyToMove' ],
  *
  *
  *
@@ -56,41 +56,42 @@ define(function( require )
 	 */
 	Plugins.init = function init( context )
 	{
-		
-		var paths = [];
-		var params = [];
-		var i, count;
+		this.list = Configs.get( 'plugins', [] );
 
-		this.list  = Configs.get('plugins', {});
+		this.list.forEach( plugin =>
+		{
+			let module = null;
+			let name = '';
+			let params = [];
 
-		for (const [pluginName, value] of Object.entries(this.list)) {
-			if (typeof value === 'string' || value instanceof String){ // Only Path is provided as string
-				paths.push('./' + value);
-				params.push(null);
-			} else if (typeof value === 'object' && value !== null) { // Path and parameters are provided as well
-				if(value.path){
-					paths.push('./' + value.path);
-					
-					if(value.pars){
-						params.push(value.pars);
-					} else {
-						params.push(null);
-					}
+			// Only Path is provided as string
+			if( typeof plugin === 'string' || plugin instanceof String )
+			{
+				name = ( plugin.split( /[\\/]/ ).pop() ).split( /\./ ).pop();
+//				module = require( './' + plugin );
+			}
+			// Path and parameters are provided as well
+			else if( typeof plugin === 'object' && plugin !== null )
+			{
+				if( !plugin.path ) return;
+
+				name = plugin.name;
+//				module = require( './' + plugin.path );
+
+				if( Array.isArray( plugin.params ) )
+				{
+					params = plugin.params;
 				}
 			}
-		}
-		
-		count = paths.length;
-		
-		require(paths, function() {
-			for (i = 0; i < count; ++i) {
-				if(arguments[i](params[i])) {
-					console.log('[PluginManager] Initialized plugin: ' + paths[i]);
-				} else {
-					console.error('[PluginManager] Failed to intialize plugin: ' + paths[i]);
-				}
+
+			if( module )
+			{
+				let instance = module( ...params );
+
+				if( instance ) console.log( '[PluginManager] Initialized plugin: ' + name );
+				else console.error( '[PluginManager] Failed to initialize plugin: ' + name );
 			}
-		});
+		} );
 	};
 
 

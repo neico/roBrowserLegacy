@@ -132,7 +132,8 @@ define(['require', 'Core/Configs'], function( require, Configs )
 	{
 		if (!_source) {
 			var url = Configs.get('development') ? './ThreadEventHandler.js' : './../../ThreadEventHandler.js';
-			_source = new Worker( require.toUrl(url) + '?' + Configs.get('version', '') );
+			url += '?' + Configs.get('version', '');
+			_source = new Worker( new URL( url, import.meta.url ) );
 		}
 
 		// Worker context

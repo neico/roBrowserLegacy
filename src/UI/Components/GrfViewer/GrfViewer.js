@@ -78,9 +78,9 @@ define(function(require)
 
 		jQuery('head:first').append(
 			'<style type="text/css">' +
-			'	#previous { background-image:url(' + require.toUrl('./Icons/arw-left.png') + '); }' +
-			'	#next     { background-image:url(' + require.toUrl('./Icons/arw-right.png') + '); }' +
-			'	#progress { background-image:url(' + require.toUrl('./Icons/load.gif') + '); }' +
+			'	#previous { background-image:url(\'./Icons/arw-left.png\'); }' +
+			'	#next     { background-image:url(\'./Icons/arw-right.png\'); }' +
+			'	#progress { background-image:url(\'./Icons/load.gif\'); }' +
 			'</style>'
 		);
 
@@ -444,7 +444,7 @@ define(function(require)
 				type  = getFileIcon(list[j+i]);
 				html +=
 					'<div class="icon '+ type +'" data-path="'+ list[j+i] +'">' +
-					'	<img src="'+ require.toUrl('./Icons/' + type +'.png') + '" width="48" height="48"/><br/>' +
+					'	<img src="./Icons/' + type +'.png" width="48" height="48"/><br/>' +
 							list[j+i].replace(reg,'') +
 					'</div>';
 			}

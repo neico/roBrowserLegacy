@@ -71,8 +71,6 @@ define(function(require)
 
 		var ui = this.ui;
 
-		preloadImages();
-
 		// About page
 		ui.find('.btn_about')
 			.mousedown(function(){
@@ -133,7 +131,7 @@ define(function(require)
 			.click(function(){
 				var parent = jQuery(this).hide().parent();
 				parent.append(
-					'<span><img src="'+ require.toUrl('./images/loading.gif')  +'"/> <i>Cleaning cache...</i></span>'
+					'<span><img src="./images/loading.gif"/> <i>Cleaning cache...</i></span>'
 				);
 
 				FileSystem.cleanup(function(){
@@ -271,33 +269,6 @@ define(function(require)
 		Particle.stop();
 		this.ui.find('.overlay').hide();
 	};
-
-
-	/**
-	 * Start loading images
-	 */
-	function preloadImages()
-	{
-		// Background images
-		jQuery('style:first').append([
-			'#intro .intro { background-image:url(' + require.toUrl('./images/background.jpg') + '); }',
-			'#intro .ribbon { background-image:url(' + require.toUrl('./images/ribbon.png') + '); }',
-			'#intro .box { background-image:url(' + require.toUrl('./images/box.jpg') + '); }',
-			'#intro .btn_play { background-image:url(' + require.toUrl('./images/play.png') + '); }',
-			'#intro .btn_play:hover { background-image:url(' + require.toUrl('./images/play-down.png') + '); }',
-			'#intro .btn_add { background-image:url('+ require.toUrl('./images/add-server.jpg') +'); }',
-			'#intro .btn_save { background-image:url('+ require.toUrl('./images/save.jpg') + '); }',
-			'#intro .btn_delete { background-image:url('+ require.toUrl('./images/delete.png') + '); }'
-		].join('\n'));
-
-		// Add images to IMG tag
-		Intro.ui.find('.icon img').attr('src', require.toUrl('./images/icon.png') );
-		Intro.ui.find('.btn_about img').attr('src', require.toUrl('./images/about.png') );
-		Intro.ui.find('.btn_settings img').attr('src', require.toUrl('./images/settings.png') );
-
-		// Preload image
-		(new Image()).src = require.toUrl('./images/play-down.png');
-	}
 
 
 	/**

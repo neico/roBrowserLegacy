@@ -8,28 +8,30 @@
  * @author Vincent Thibault
  */
 
-// Errors Handler (hack)
-require.onError = function (err) {
-	'use strict';
+/// <reference types="webpack/module" />
+const WebPackLoadChunk = __webpack_chunk_load__;
+__webpack_chunk_load__ = async ( id ) =>
+{
+	let error;
+	try
+	{
+		return await WebPackLoadChunk( id );
+	}
+	catch( exception )
+	{
+		error = exception;
 
-	if (require.defined('UI/Components/Error/Error')) {
-		require('UI/Components/Error/Error').addTrace(err);
-		return;
+		require( ['UI/Components/Error/Error'], function( Errors )
+		{
+			Errors.addTrace( error );
+		} );
 	}
 
-	require(['UI/Components/Error/Error'], function( Errors ){
-		Errors.addTrace(err);
-	});
+	throw error;
 };
 
 
-require({
-	baseUrl: './src/',
-	paths: {
-		text:   'Vendors/text.require',
-		jquery: 'Vendors/jquery-1.9.1'
-	}
-},
+require(
 	['Utils/Queue',
 	 'Core/Configs', 'Core/Client', 'Core/Thread',
 	 'Audio/BGM',
